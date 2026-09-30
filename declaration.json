@@ -1,0 +1,55 @@
+{
+  "key": "openai.responses",
+  "kind": "module",
+  "name": "OpenAI Responses",
+  "description": "使用调用方指定的模型创建非流式文本响应；仅提供独立 Go 实现，尚未接入 PADC 实例和 Provider。",
+  "configuration_schema": {
+    "type": "object",
+    "properties": {
+      "organization": { "type": "string" },
+      "project": { "type": "string" }
+    },
+    "additionalProperties": false
+  },
+  "implementation_key": "openai.responses",
+  "module": {
+    "protocols": [
+      {
+        "key": "openai.responses.create",
+        "input_schema": {
+          "type": "object",
+          "required": ["model", "input"],
+          "properties": {
+            "model": { "type": "string", "minLength": 1 },
+            "input": { "type": "string", "minLength": 1 },
+            "instructions": { "type": "string" },
+            "max_output_tokens": { "type": "integer", "minimum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "output_schema": {
+          "type": "object",
+          "required": ["id", "status", "output"],
+          "properties": {
+            "id": { "type": "string" },
+            "status": { "type": "string" },
+            "model": { "type": "string" },
+            "output": { "type": "array", "items": { "type": "object" } },
+            "request_id": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "effect": "write",
+        "streaming": false
+      }
+    ],
+    "auth_requirements": [],
+    "callbacks": [],
+    "requires_initialization": false,
+    "supports_remote_lookup": false,
+    "instance_structure": false,
+    "actions": [],
+    "agent_knowledge": { "nodes": [], "templates": [], "slots": [], "relations": [] },
+    "resources": []
+  }
+}
